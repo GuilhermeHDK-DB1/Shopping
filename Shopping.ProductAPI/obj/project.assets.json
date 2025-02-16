@@ -2617,6 +2617,7 @@
       "packagesPath": "C:\\Users\\guilherme.shibukawa\\.nuget\\packages\\",
       "outputPath": "C:\\cursos\\Shopping\\Shopping.ProductAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
         "C:\\Users\\guilherme.shibukawa\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
@@ -2637,6 +2638,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
