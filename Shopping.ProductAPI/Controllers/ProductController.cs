@@ -6,7 +6,7 @@ namespace Shopping.ProductAPI.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public class ShoppingController : ControllerBase
+public class ProductController : ControllerBase
 {
     [HttpGet()]
     public async Task<IActionResult> FindAll(
