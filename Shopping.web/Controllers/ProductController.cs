@@ -37,4 +37,49 @@ public class ProductController : Controller
 
         return View(product);
     }
+    
+    public async Task<IActionResult> ProductUpdate(long id)
+    {
+        var product = await _productService.FindByIdAsync(id);
+        
+        if (product != null)
+            return View(product);
+        
+        return NotFound();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> ProductUpdate(ProductModel product)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _productService.UpdateAsync(product);
+
+            if (result != null)
+                return RedirectToAction(nameof(ProductIndex));
+        }
+
+        return View(product);
+    }
+    
+    public async Task<IActionResult> ProductDelete(long id)
+    {
+        var product = await _productService.FindByIdAsync(id);
+        
+        if (product != null)
+            return View(product);
+        
+        return NotFound();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> ProductDelete(ProductModel product)
+    {
+        var result = await _productService.DeleteAsync(product.Id);
+
+        if (result)
+            return RedirectToAction(nameof(ProductIndex));
+
+        return View(product);
+    }
 }

@@ -41,7 +41,7 @@ public class ProductService : IProductService
         var response = await _httpClient.PutAsJson($"{BasePath}", product);
 
         if (!response.IsSuccessStatusCode)
-            throw new Exception("Something went wrong creating the product");
+            throw new Exception("Something went wrong updating the product");
         
         return await response.ReadContentAs<ProductModel>();
     }
@@ -51,7 +51,7 @@ public class ProductService : IProductService
         var response = await _httpClient.DeleteAsync($"{BasePath}/{id}");
 
         if (!response.IsSuccessStatusCode)
-            throw new Exception("Something went wrong creating the product");
+            throw new Exception("Something went wrong deleting the product");
         
         return await response.ReadContentAs<bool>();
     }

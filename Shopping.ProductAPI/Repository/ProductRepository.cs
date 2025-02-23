@@ -48,7 +48,8 @@ public class ProductRepository : IProductRepository
         var product = await _context.Products.FindAsync(vo.Id);
         if (product == null)
             return default;
-
+        
+        _mapper.Map(vo, product);
         _context.Products.Update(product);
         await _context.SaveChangesAsync();
         return _mapper.Map<ProductVO>(product);
