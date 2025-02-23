@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping.IdentityServer.Configuration;
+using Shopping.IdentityServer.Initializer;
 using Shopping.IdentityServer.Model;
 using Shopping.IdentityServer.Model.Context;
 
@@ -28,9 +29,14 @@ var identityServerBuilder = builder.Services.AddIdentityServer(options =>
     .AddInMemoryApiScopes(IdentityConfiguration.ApiScopes())
     .AddInMemoryClients(IdentityConfiguration.Clients())
     .AddAspNetIdentity<ApplicationUser>();
+
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 identityServerBuilder.AddDeveloperSigningCredential();
 
 var app = builder.Build();
+
+var dbInitializerService = app.Services.CreateScope().ServiceProvider.GetService<IDbInitializer>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -52,5 +58,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+dbInitializerService?.Initialize();
 
 app.Run();
