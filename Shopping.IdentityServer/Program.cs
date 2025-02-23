@@ -1,9 +1,11 @@
+using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping.IdentityServer.Configuration;
 using Shopping.IdentityServer.Initializer;
 using Shopping.IdentityServer.Model;
 using Shopping.IdentityServer.Model.Context;
+using Shopping.IdentityServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,7 @@ var identityServerBuilder = builder.Services.AddIdentityServer(options =>
     .AddAspNetIdentity<ApplicationUser>();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
 
 identityServerBuilder.AddDeveloperSigningCredential();
 
@@ -53,6 +56,7 @@ app.UseRouting();
 
 app.UseIdentityServer();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
