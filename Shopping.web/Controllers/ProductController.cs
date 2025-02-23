@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shopping.web.Models;
 using Shopping.web.Services.IServices;
 
 namespace Shopping.web.Controllers;
@@ -16,5 +17,24 @@ public class ProductController : Controller
     {
         var products = await _productService.FindAllAsync();
         return View(products);
+    }
+    
+    public ViewResult ProductCreate()
+    {
+        return View();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> ProductCreate(ProductModel product)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _productService.CreateAsync(product);
+
+            if (result != null)
+                return RedirectToAction(nameof(ProductIndex));
+        }
+
+        return View(product);
     }
 }
