@@ -25,6 +25,14 @@ public class HomeController : Controller
         var products = await _productService.FindAllAsync();
         return View(products);
     }
+    
+    [Authorize]
+    public async Task<IActionResult> Details(long id)
+    {
+        var accessToken = await HttpContext.GetTokenAsync("access_token");
+        var product = await _productService.FindByIdAsync(id, accessToken);
+        return View(product);
+    }
 
     public IActionResult Privacy()
     {
