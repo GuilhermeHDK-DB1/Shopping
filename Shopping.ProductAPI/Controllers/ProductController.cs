@@ -11,7 +11,6 @@ namespace Shopping.ProductAPI.Controllers;
 public class ProductController : ControllerBase
 {
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> FindAll(
         [FromServices] IProductRepository repository)
     {
