@@ -1,4 +1,5 @@
-﻿using Shopping.web.Models;
+﻿using System.Net.Http.Headers;
+using Shopping.web.Models;
 using Shopping.web.Services.IServices;
 using Shopping.web.Utils;
 
@@ -20,14 +21,20 @@ public class ProductService : IProductService
         return await response.ReadContentAs<List<ProductModel>>();
     }
 
-    public async Task<ProductModel> FindByIdAsync(long id)
+    public async Task<ProductModel> FindByIdAsync(long id, string token)
     {
+        _httpClient.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue("Bearer", token);
+        
         var response = await _httpClient.GetAsync($"{BasePath}/{id}");
         return await response.ReadContentAs<ProductModel>();
     }
 
-    public async Task<ProductModel> CreateAsync(ProductModel product)
+    public async Task<ProductModel> CreateAsync(ProductModel product, string token)
     {
+        _httpClient.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue("Bearer", token);
+        
         var response = await _httpClient.PostAsJson($"{BasePath}", product);
 
         if (!response.IsSuccessStatusCode)
@@ -36,8 +43,11 @@ public class ProductService : IProductService
         return await response.ReadContentAs<ProductModel>();
     }
 
-    public async Task<ProductModel> UpdateAsync(ProductModel product)
+    public async Task<ProductModel> UpdateAsync(ProductModel product, string token)
     {
+        _httpClient.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue("Bearer", token);
+        
         var response = await _httpClient.PutAsJson($"{BasePath}", product);
 
         if (!response.IsSuccessStatusCode)
@@ -46,8 +56,11 @@ public class ProductService : IProductService
         return await response.ReadContentAs<ProductModel>();
     }
 
-    public async Task<bool> DeleteAsync(long id)
+    public async Task<bool> DeleteAsync(long id, string token)
     {
+        _httpClient.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue("Bearer", token);
+        
         var response = await _httpClient.DeleteAsync($"{BasePath}/{id}");
 
         if (!response.IsSuccessStatusCode)

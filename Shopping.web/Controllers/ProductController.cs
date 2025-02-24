@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shopping.web.Models;
 using Shopping.web.Services.IServices;
@@ -33,7 +34,8 @@ public class ProductController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _productService.CreateAsync(product);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var result = await _productService.CreateAsync(product, accessToken);
 
             if (result != null)
                 return RedirectToAction(nameof(ProductIndex));
@@ -44,7 +46,8 @@ public class ProductController : Controller
     
     public async Task<IActionResult> ProductUpdate(long id)
     {
-        var product = await _productService.FindByIdAsync(id);
+        var accessToken = await HttpContext.GetTokenAsync("access_token");
+        var product = await _productService.FindByIdAsync(id, accessToken);
         
         if (product != null)
             return View(product);
@@ -58,7 +61,8 @@ public class ProductController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _productService.UpdateAsync(product);
+            var accessToken = await HttpContext.GetTokenAsync("access_token");
+            var result = await _productService.UpdateAsync(product, accessToken);
 
             if (result != null)
                 return RedirectToAction(nameof(ProductIndex));
@@ -70,7 +74,8 @@ public class ProductController : Controller
     [Authorize]
     public async Task<IActionResult> ProductDelete(long id)
     {
-        var product = await _productService.FindByIdAsync(id);
+        var accessToken = await HttpContext.GetTokenAsync("access_token");
+        var product = await _productService.FindByIdAsync(id, accessToken);
         
         if (product != null)
             return View(product);
@@ -82,7 +87,8 @@ public class ProductController : Controller
     [Authorize(Roles = Role.Admin)]
     public async Task<IActionResult> ProductDelete(ProductModel product)
     {
-        var result = await _productService.DeleteAsync(product.Id);
+        var accessToken = await HttpContext.GetTokenAsync("access_token");
+        var result = await _productService.DeleteAsync(product.Id, accessToken);
 
         if (result)
             return RedirectToAction(nameof(ProductIndex));
