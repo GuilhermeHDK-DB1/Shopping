@@ -1,4 +1,6 @@
-﻿namespace Shopping.web.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shopping.web.Models;
 
 public class ProductModel
 {
@@ -8,6 +10,9 @@ public class ProductModel
     public String Description { get; set; }
     public String CategoryName { get; set; }
     public String ImageUrl { get; set; }
+    
+    [Range(1,100)]
+    public int Count { get; set; } = 1;
 
     public string SubstringName()
     {
