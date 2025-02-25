@@ -2,7 +2,7 @@
 
 namespace Shopping.web.Models;
 
-public class ProductModel
+public class ProductViewModel
 {
     public long Id { get; set; }
     public String Name { get; set; }

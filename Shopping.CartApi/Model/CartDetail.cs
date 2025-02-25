@@ -6,12 +6,12 @@ namespace Shopping.CartApi.Model;
 [Table("cart_detail")]
 public class CartDetail : BaseEntity
 {
-    [ForeignKey("CartHeaderId")]
     public long CartHeaderId { get; set; }
+    [ForeignKey("CartHeaderId")]
     public CartHeader CartHeader { get; set; }
     
-    [ForeignKey("ProductId")]
     public long ProductId { get; set; }
+    [ForeignKey("ProductId")]
     public Product Product { get; set; }
     
     [Column("count")]

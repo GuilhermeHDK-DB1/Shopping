@@ -15,45 +15,45 @@ public class ProductService : IProductService
         _httpClient = httpClient;
     }
 
-    public async Task<IEnumerable<ProductModel>> FindAllAsync()
+    public async Task<IEnumerable<ProductViewModel>> FindAllAsync()
     {
         var response = await _httpClient.GetAsync(BasePath);
-        return await response.ReadContentAs<List<ProductModel>>();
+        return await response.ReadContentAs<List<ProductViewModel>>();
     }
 
-    public async Task<ProductModel> FindByIdAsync(long id, string token)
+    public async Task<ProductViewModel> FindByIdAsync(long id, string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
         var response = await _httpClient.GetAsync($"{BasePath}/{id}");
-        return await response.ReadContentAs<ProductModel>();
+        return await response.ReadContentAs<ProductViewModel>();
     }
 
-    public async Task<ProductModel> CreateAsync(ProductModel product, string token)
+    public async Task<ProductViewModel> CreateAsync(ProductViewModel productView, string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
-        var response = await _httpClient.PostAsJson($"{BasePath}", product);
+        var response = await _httpClient.PostAsJson($"{BasePath}", productView);
 
         if (!response.IsSuccessStatusCode)
             throw new Exception("Something went wrong creating the product");
         
-        return await response.ReadContentAs<ProductModel>();
+        return await response.ReadContentAs<ProductViewModel>();
     }
 
-    public async Task<ProductModel> UpdateAsync(ProductModel product, string token)
+    public async Task<ProductViewModel> UpdateAsync(ProductViewModel productView, string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
-        var response = await _httpClient.PutAsJson($"{BasePath}", product);
+        var response = await _httpClient.PutAsJson($"{BasePath}", productView);
 
         if (!response.IsSuccessStatusCode)
             throw new Exception("Something went wrong updating the product");
         
-        return await response.ReadContentAs<ProductModel>();
+        return await response.ReadContentAs<ProductViewModel>();
     }
 
     public async Task<bool> DeleteAsync(long id, string token)

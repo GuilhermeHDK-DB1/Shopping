@@ -30,18 +30,18 @@ public class ProductController : Controller
     
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> ProductCreate(ProductModel product)
+    public async Task<IActionResult> ProductCreate(ProductViewModel productView)
     {
         if (ModelState.IsValid)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var result = await _productService.CreateAsync(product, accessToken);
+            var result = await _productService.CreateAsync(productView, accessToken);
 
             if (result != null)
                 return RedirectToAction(nameof(ProductIndex));
         }
 
-        return View(product);
+        return View(productView);
     }
     
     public async Task<IActionResult> ProductUpdate(long id)
@@ -57,18 +57,18 @@ public class ProductController : Controller
     
     [Authorize]
     [HttpPost]
-    public async Task<IActionResult> ProductUpdate(ProductModel product)
+    public async Task<IActionResult> ProductUpdate(ProductViewModel productView)
     {
         if (ModelState.IsValid)
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            var result = await _productService.UpdateAsync(product, accessToken);
+            var result = await _productService.UpdateAsync(productView, accessToken);
 
             if (result != null)
                 return RedirectToAction(nameof(ProductIndex));
         }
 
-        return View(product);
+        return View(productView);
     }
     
     [Authorize]
@@ -85,14 +85,14 @@ public class ProductController : Controller
     
     [HttpPost]
     [Authorize(Roles = Role.Admin)]
-    public async Task<IActionResult> ProductDelete(ProductModel product)
+    public async Task<IActionResult> ProductDelete(ProductViewModel productView)
     {
         var accessToken = await HttpContext.GetTokenAsync("access_token");
-        var result = await _productService.DeleteAsync(product.Id, accessToken);
+        var result = await _productService.DeleteAsync(productView.Id, accessToken);
 
         if (result)
             return RedirectToAction(nameof(ProductIndex));
 
-        return View(product);
+        return View(productView);
     }
 }

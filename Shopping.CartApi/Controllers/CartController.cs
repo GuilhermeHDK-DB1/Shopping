@@ -9,9 +9,9 @@ namespace Shopping.CartApi.Controllers;
 public class CartController : ControllerBase
 {
     [HttpGet("find-cart/{userId}")]
-    public async Task<IActionResult> FindCartById(
+    public async Task<IActionResult> FindCartByUserId(
         string userId,
-        [FromServices] CartRepository repository)
+        [FromServices] ICartRepository repository)
     {
         var products = await repository.FindCartByUserIdAsync(userId);
         if (products is null) return NotFound();
@@ -21,7 +21,7 @@ public class CartController : ControllerBase
     [HttpPost("add-cart")]
     public async Task<IActionResult> AddCart(
         [FromBody] CartVo vo,
-        [FromServices] CartRepository repository)
+        [FromServices] ICartRepository repository)
     {
         var products = await repository.SaveOrUpdateCartAsync(vo);
         if (products is null) return NotFound();
@@ -31,7 +31,7 @@ public class CartController : ControllerBase
     [HttpPut("update-cart")]
     public async Task<IActionResult> UpdateCart(
         [FromBody] CartVo vo,
-        [FromServices] CartRepository repository)
+        [FromServices] ICartRepository repository)
     {
         var products = await repository.SaveOrUpdateCartAsync(vo);
         if (products is null) return NotFound();
@@ -41,7 +41,7 @@ public class CartController : ControllerBase
     [HttpDelete("remove-cart/{cartDetailsId}")]
     public async Task<IActionResult> RemoveCart(
         long cartDetailsId,
-        [FromServices] CartRepository repository)
+        [FromServices] ICartRepository repository)
     {
         var status = await repository.RemoveFromCartAsync(cartDetailsId);
         if (!status) return NotFound();
