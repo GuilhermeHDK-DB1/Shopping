@@ -15,13 +15,17 @@ public class CartService : ICartService
         _httpClient = httpClient;
     }
     
-    public async Task<CartViewModel> FindCartByUserIdAsync(string userId, string token)
+    public async Task<CartViewModel?> FindCartByUserIdAsync(string userId, string token)
     {
         _httpClient.DefaultRequestHeaders.Authorization = 
             new AuthenticationHeaderValue("Bearer", token);
         
         var response = await _httpClient.GetAsync($"{BasePath}/find-cart/{userId}");
-        return await response.ReadContentAs<CartViewModel>();
+        
+        if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            return null;
+        
+        return await response.ReadContentAs<CartViewModel?>();
     }
 
     public async Task<CartViewModel> AddItemToCartAsync(CartViewModel cart, string token)
