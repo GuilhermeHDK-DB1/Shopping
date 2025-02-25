@@ -19,12 +19,17 @@ public class CartRepository : ICartRepository
         _mapper = mapper;
     }
     
-    public async Task<CartVo> FindCartByUserIdAsync(string userId)
+    public async Task<CartVo?> FindCartByUserIdAsync(string userId)
     {
+        var cartHeader = await _context.CartHeaders
+            .FirstOrDefaultAsync(c => c.UserId == userId);
+        
+        if (cartHeader == null)
+            return null;
+        
         Cart cart = new()
         {
-            CartHeader = await _context.CartHeaders
-                .FirstOrDefaultAsync(c => c.UserId == userId),
+            CartHeader = cartHeader
         };
         cart.CartDetails = _context.CartDetails
             .Where(c => c.CartHeaderId == cart.CartHeader.Id)

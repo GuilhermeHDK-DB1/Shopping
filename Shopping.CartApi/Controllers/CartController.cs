@@ -14,7 +14,6 @@ public class CartController : ControllerBase
         [FromServices] ICartRepository repository)
     {
         var products = await repository.FindCartByUserIdAsync(userId);
-        if (products is null) return NotFound();
         return Ok(products);
     }
     
