@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Shopping.CouponAPI.Config;
 using Shopping.CouponAPI.Model.Context;
+using Shopping.CouponAPI.Repository;
+using Shopping.CouponAPI.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,7 +58,7 @@ IMapper mapper = MappingConfig.RegisterMappings().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-// builder.Services.AddScoped<ICouponRepository, CouponRepository>();
+builder.Services.AddScoped<ICouponRepository, CouponRepository>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
