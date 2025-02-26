@@ -57,9 +57,9 @@ public class CartController : ControllerBase
         return Ok(status);
     }
     
-    [HttpPost("remove-coupon")]
+    [HttpDelete("remove-coupon/{userId}")]
     public async Task<IActionResult> removeCoupon(
-        [FromBody] string userId,
+        string userId,
         [FromServices] ICartRepository repository)
     {
         var status = await repository.RemoveCouponAsync(userId);
