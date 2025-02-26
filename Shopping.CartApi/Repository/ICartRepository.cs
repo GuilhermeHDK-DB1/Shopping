@@ -8,6 +8,6 @@ public interface ICartRepository
     Task<CartVo> SaveOrUpdateCartAsync(CartVo vo);
     Task<bool> RemoveFromCartAsync(long cartDetailsId);
     Task<bool> ApplyCouponAsync(string userId, string couponCode);
-    Task<bool> RemoveCoupon(string userId);
+    Task<bool> RemoveCouponAsync(string userId);
     Task<bool> ClearCart(string userId);
 }

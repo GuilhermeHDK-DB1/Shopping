@@ -122,14 +122,36 @@ public class CartRepository : ICartRepository
         }
     }
 
-    public Task<bool> ApplyCouponAsync(string userId, string couponCode)
+    public async Task<bool> ApplyCouponAsync(string userId, string couponCode)
     {
-        throw new NotImplementedException();
+        var cartHeader = await _context.CartHeaders
+            .FirstOrDefaultAsync(c => c.UserId == userId);
+        
+        if (cartHeader != null)
+        {
+            cartHeader.CouponCode = couponCode;
+            _context.CartHeaders.Update(cartHeader);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        
+        return false;
     }
 
-    public Task<bool> RemoveCoupon(string userId)
+    public async Task<bool> RemoveCouponAsync(string userId)
     {
-        throw new NotImplementedException();
+        var cartHeader = await _context.CartHeaders
+            .FirstOrDefaultAsync(c => c.UserId == userId);
+        
+        if (cartHeader != null)
+        {
+            cartHeader.CouponCode = null;
+            _context.CartHeaders.Update(cartHeader);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        
+        return false;
     }
 
     public async Task<bool> ClearCart(string userId)
