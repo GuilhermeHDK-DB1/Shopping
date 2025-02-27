@@ -108,4 +108,25 @@ public class CartController : Controller
     {
         return View(await FindUserCart());
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> CheckoutIndex(CartViewModel cart)
+    {
+        var token = await HttpContext.GetTokenAsync("access_token");
+        var userId = User.Claims.Where(u => u.Type == "sub")?.FirstOrDefault()?.Value;
+
+        var response = await _cartService.CheckoutAsync(cart.CartHeader, token);
+
+        if(response != null)
+        {
+            return RedirectToAction(nameof(ConfirmationIndex));
+        }
+        return View(cart);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> ConfirmationIndex()
+    {
+        return View();
+    }
 }

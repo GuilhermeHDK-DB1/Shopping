@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.CartApi.Data.ValueObjects;
+using Shopping.CartApi.Messages;
 using Shopping.CartApi.Repository;
 
 namespace Shopping.CartApi.Controllers;
@@ -58,12 +59,25 @@ public class CartController : ControllerBase
     }
     
     [HttpDelete("remove-coupon/{userId}")]
-    public async Task<IActionResult> removeCoupon(
+    public async Task<IActionResult> RemoveCoupon(
         string userId,
         [FromServices] ICartRepository repository)
     {
         var status = await repository.RemoveCouponAsync(userId);
         if (!status) return NotFound();
         return Ok(status);
+    }
+    
+    [HttpPost("checkout")]
+    public async Task<IActionResult> Checkout(
+        [FromBody] CheckoutHeaderVo checkoutHeader,
+        [FromServices] ICartRepository repository)
+    {
+        var cart = await repository.FindCartByUserIdAsync(checkoutHeader.UserId);
+        if (cart == null) return NotFound();
+        checkoutHeader.CartDetails = cart.CartDetails;
+        
+        //TODO: chamada de RabbitMQ
+        return Ok(checkoutHeader);
     }
 }

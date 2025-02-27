@@ -98,8 +98,16 @@ public class CartService : ICartService
         throw new NotImplementedException();
     }
 
-    public Task<CartViewModel> CheckoutAsync(CartHeaderViewModel cartHeader, string token)
+    public async Task<CartHeaderViewModel> CheckoutAsync(CartHeaderViewModel cartHeader, string token)
     {
-        throw new NotImplementedException();
+        _httpClient.DefaultRequestHeaders.Authorization = 
+            new AuthenticationHeaderValue("Bearer", token);
+        
+        var response = await _httpClient.PostAsJson($"{BasePath}/checkout", cartHeader);
+
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Something went wrong applying the coupon");
+        
+        return await response.ReadContentAs<CartHeaderViewModel>();
     }
 }
