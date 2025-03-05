@@ -76,6 +76,7 @@ public class CartController : ControllerBase
         var cart = await repository.FindCartByUserIdAsync(checkoutHeader.UserId);
         if (cart == null) return NotFound();
         checkoutHeader.CartDetails = cart.CartDetails;
+        checkoutHeader.Time = DateTime.Now;
         
         //TODO: chamada de RabbitMQ
         return Ok(checkoutHeader);
