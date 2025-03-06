@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Shopping.CartApi.Repository;
 using Shopping.OrderAPI.Model.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<Context>(options => 
     options.UseSqlServer(connectionString));
 
+var dbContextOptionsBuilder = new DbContextOptionsBuilder<Context>();
+dbContextOptionsBuilder.UseSqlServer(connectionString);
+
+builder.Services.AddSingleton(new OrderRepository(dbContextOptionsBuilder.Options));
+    
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
