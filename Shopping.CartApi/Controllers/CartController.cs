@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopping.CartApi.Data.ValueObjects;
 using Shopping.CartApi.Messages;
+using Shopping.CartApi.RabbitMQSender;
 using Shopping.CartApi.Repository;
 
 namespace Shopping.CartApi.Controllers;
@@ -71,14 +72,20 @@ public class CartController : ControllerBase
     [HttpPost("checkout")]
     public async Task<IActionResult> Checkout(
         [FromBody] CheckoutHeaderVo checkoutHeader,
-        [FromServices] ICartRepository repository)
+        [FromServices] ICartRepository repository,
+        [FromServices] IRabbitMQMessageSender sender)
     {
+        if (checkoutHeader?.UserId is null)
+            return BadRequest();
+        
         var cart = await repository.FindCartByUserIdAsync(checkoutHeader.UserId);
-        if (cart == null) return NotFound();
+        if (cart == null)
+            return NotFound();
+        
         checkoutHeader.CartDetails = cart.CartDetails;
         checkoutHeader.Time = DateTime.Now;
         
-        //TODO: chamada de RabbitMQ
+        sender.Send(checkoutHeader, "CheckoutQueue");
         return Ok(checkoutHeader);
     }
 }
