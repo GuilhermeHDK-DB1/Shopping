@@ -2766,27 +2766,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\guilherme.shibukawa\\.nuget\\packages\\": {}
+    "C:\\Users\\Guilherme\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\cursos\\Shopping\\Shopping.web\\Shopping.web.csproj",
+      "projectUniqueName": "D:\\dev\\Shopping\\Shopping.web\\Shopping.web.csproj",
       "projectName": "Shopping.web",
-      "projectPath": "C:\\cursos\\Shopping\\Shopping.web\\Shopping.web.csproj",
-      "packagesPath": "C:\\Users\\guilherme.shibukawa\\.nuget\\packages\\",
-      "outputPath": "C:\\cursos\\Shopping\\Shopping.web\\obj\\",
+      "projectPath": "D:\\dev\\Shopping\\Shopping.web\\Shopping.web.csproj",
+      "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
+      "outputPath": "D:\\dev\\Shopping\\Shopping.web\\obj\\",
       "projectStyle": "PackageReference",
       "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "C:\\Users\\guilherme.shibukawa\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {},
-        "https://pkgs.dev.azure.com/SIG-DN/SIG/_packaging/SigPackage/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -2832,24 +2831,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.31, 6.0.31]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.31, 6.0.31]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.31, 6.0.31]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.31, 6.0.31]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2858,7 +2839,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\guilherme.shibukawa\\.dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.428\\RuntimeIdentifierGraph.json"
       }
     }
   }

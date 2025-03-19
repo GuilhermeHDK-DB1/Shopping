@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shopping.OrderAPI.Model;
 using Shopping.OrderAPI.Model.Context;
-using Shopping.OrderAPI.Repository;
 
-namespace Shopping.CartApi.Repository;
+namespace Shopping.OrderAPI.Repository;
 
 public class OrderRepository : IOrderRepository
 {

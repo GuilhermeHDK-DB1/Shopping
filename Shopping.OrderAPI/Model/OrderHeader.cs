@@ -10,10 +10,10 @@ public class OrderHeader : BaseEntity
     public string UserId { get; set; }
 
     [Column("coupon_code")]
-    public string CouponCode { get; set; }
+    public string? CouponCode { get; set; }
 
     [Column("purchase_amount")]
-    public decimal PurchaseAmount { get; set; }
+    public decimal? PurchaseAmount { get; set; }
 
     [Column("discount_amount")]
     public decimal DiscountAmount { get; set; }

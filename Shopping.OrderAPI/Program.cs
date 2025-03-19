@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Shopping.CartApi.Repository;
 using Shopping.OrderAPI.Model.Context;
+using Shopping.OrderAPI.RabbitMQConsumer;
+using Shopping.OrderAPI.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,7 @@ var dbContextOptionsBuilder = new DbContextOptionsBuilder<Context>();
 dbContextOptionsBuilder.UseSqlServer(connectionString);
 
 builder.Services.AddSingleton(new OrderRepository(dbContextOptionsBuilder.Options));
+builder.Services.AddHostedService<RabbitMqMessageConsumer>();
     
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
